@@ -1,13 +1,13 @@
-require_relative 'lib/database_connection'
+require_relative "lib/database_connection"
+require_relative "lib/books_repository"
 
-# We need to give the database name to the method `connect`.
-DatabaseConnection.connect('book_store')
+DatabaseConnection.connect("book_store")
 
-# Perform a SQL query on the database and get the result set.
-sql = 'SELECT id, title FROM books;'
+books_repository = BooksRepository.new
+
+sql = 'SELECT id, title, author_name FROM books;'
 result = DatabaseConnection.exec_params(sql, [])
 
-# Print out each record from the result set .
-result.each do |book|
-  p book
+books_repository.all.each do |each_book|
+    puts "#{each_book.id} - #{each_book.title} - #{each_book.author_name}" 
 end
